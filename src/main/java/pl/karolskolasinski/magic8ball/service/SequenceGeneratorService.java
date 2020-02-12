@@ -4,7 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.MongoOperations;
 import org.springframework.data.mongodb.core.query.Update;
 import org.springframework.stereotype.Service;
-import pl.karolskolasinski.magic8ball.model.DatabaseSequence;
+import pl.karolskolasinski.magic8ball.model.AnswerSequence;
+import pl.karolskolasinski.magic8ball.model.QuestionSequence;
 
 import java.util.Objects;
 
@@ -22,10 +23,18 @@ public class SequenceGeneratorService {
         this.mongoOperations = mongoOperations;
     }
 
-    public int generateSequence(String seqName) {
-        DatabaseSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+    public int generateAnswerSequence(String seqName) {
+        AnswerSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq", 1), options().returnNew(true).upsert(true),
-                DatabaseSequence.class);
+                AnswerSequence.class);
+        return !Objects.isNull(counter) ? counter.getSeq() : 1;
+
+    }
+
+    public int generateQuestionSequence(String seqName) {
+        QuestionSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
+                new Update().inc("seq", 1), options().returnNew(true).upsert(true),
+                QuestionSequence.class);
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
 
     }
