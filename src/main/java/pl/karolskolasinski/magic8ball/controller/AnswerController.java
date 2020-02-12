@@ -6,6 +6,7 @@ import org.springframework.web.bind.annotation.*;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.repository.AnswerRepository;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
+import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
 import java.util.List;
 
@@ -15,11 +16,13 @@ public class AnswerController {
 
     private AnswerService answerService;
     private AnswerRepository answerRepository;
+    private SequenceGeneratorService sequenceGeneratorService;
 
     @Autowired
-    public AnswerController(AnswerService answerService, AnswerRepository answerRepository) {
+    public AnswerController(AnswerService answerService, AnswerRepository answerRepository, SequenceGeneratorService sequenceGeneratorService) {
         this.answerService = answerService;
         this.answerRepository = answerRepository;
+        this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
     /*CRUD*/
@@ -27,9 +30,10 @@ public class AnswerController {
     //create
     @PostMapping("/addAnswer")
     public String createAnswer(Model model, @RequestBody Answer answer) {
+        answer.setId(sequenceGeneratorService.generateSequence(Answer.SEQUENCE_NAME));
         answerService.saveAnswerToDatabase(answer);
         model.addAttribute("savedAnswer", answerService.saveAnswerToDatabase(answer));
-        return "saved " + answer.getId();
+        return "saved ";
     }
 
     //read
