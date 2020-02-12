@@ -2,45 +2,30 @@ package pl.karolskolasinski.magic8ball.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
-import pl.karolskolasinski.magic8ball.service.AskService;
-
-import java.text.DecimalFormat;
+import pl.karolskolasinski.magic8ball.service.AskQuestionService;
 
 @Controller
 @RequestMapping(path = "/")
 public class IndexController {
 
-    private final AskService askService;
-    private DecimalFormat decimalFormat = new DecimalFormat("##.##");
+    private final AskQuestionService askQuestionService;
 
     @Autowired
-    public IndexController(AskService askService) {
-        this.askService = askService;
+    public IndexController(AskQuestionService askQuestionService) {
+        this.askQuestionService = askQuestionService;
     }
 
-    /*Dispaly index with statistisc GET*/
     @GetMapping("/")
-    public String index(Model model) {
-        /*Last month statistics*/
-        model.addAttribute("gamesPlayedAll", quizSetupService.gamesPlayedAll());
-        model.addAttribute("percentageOfCorrectAnswersAll", decimalFormat.format(quizSetupService.correctAnswersAll() * 100 / quizSetupService.allAnswersAll()));
-        model.addAttribute("bestScoreAll", quizSetupService.bestScoreAll());
-
+    public String index() {
         return "index";
     }
 
     /*Login GET*/
     @GetMapping("/login")
     public String login() {
-        return "account/login-form";
+        return "admin/login-form";
     }
 
-    /*Start new quiz GET*/
-    @GetMapping("quizSetup/numberofplayers")
-    public String play() {
-        return "quizsetup/quizsetup-numberofplayers";
-    }
 }

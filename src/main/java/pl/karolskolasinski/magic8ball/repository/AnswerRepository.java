@@ -1,7 +1,7 @@
 package pl.karolskolasinski.magic8ball.repository;
 
-import org.springframework.data.repository.CrudRepository;
-import pl.karolskolasinski.magic8ball.model.Question;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import pl.karolskolasinski.magic8ball.model.Answer;
 
-public interface AnswerRepository extends CrudRepository<Question, Long> {
+public interface AnswerRepository extends MongoRepository<Answer, Integer> {
 }

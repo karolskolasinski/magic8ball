@@ -12,7 +12,7 @@ import java.sql.Timestamp;
 
 @Data
 @AllArgsConstructor
-@Document(collation = "questions")
+@Document(collection = "questions")
 public class Question {
 
     @Id
