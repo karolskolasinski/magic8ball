@@ -15,7 +15,7 @@ import javax.validation.constraints.NotEmpty;
 public class Answer {
 
     @Transient
-    public static final String SEQUENCE_NAME = "users_sequence";
+    public static final String SEQUENCE_NAME = "sequence";
 
     @Id
     private int id;

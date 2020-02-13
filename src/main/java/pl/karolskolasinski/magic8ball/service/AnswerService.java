@@ -5,7 +5,9 @@ import org.springframework.stereotype.Service;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.repository.AnswerRepository;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.List;
+import java.util.Optional;
 
 @Service
 public class AnswerService {
@@ -26,4 +28,18 @@ public class AnswerService {
         return answerRepository.findAll();
     }
 
+    public int countAnswers() {
+        return answerRepository.countAnswersByAnswerContentIsNotNull();
+    }
+
+    public void update(Answer answer, HttpServletRequest request) {
+        Optional<Answer> answerOptional = answerRepository.findById(answer.getId());
+        answerOptional.ifPresent(a -> a.setAnswerContent("POPR"));
+        answerOptional.ifPresent(answerRepository::save);
+    }
+
+    public void deleteAnswer(Long answerId) {
+        Optional<Answer> answerOptional = answerRepository.findById(Math.toIntExact(answerId));//todo long -> integer
+        answerOptional.ifPresent(answerRepository::delete);
+    }
 }

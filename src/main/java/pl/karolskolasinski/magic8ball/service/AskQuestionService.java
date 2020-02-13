@@ -15,7 +15,6 @@ public class AskQuestionService {
         this.askQuestionRepository = askQuestionRepository;
     }
 
-
     public void saveQuestionToDatabase(Question question) {
         askQuestionRepository.save(question);
     }
