@@ -1,16 +1,15 @@
 package pl.karolskolasinski.magic8ball.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
+import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.model.Question;
+import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.AskQuestionService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-import java.sql.Timestamp;
-import java.time.LocalDateTime;
-import java.util.Date;
+import javax.servlet.http.HttpServletRequest;
 
 @RestController
 //@Controller
@@ -18,12 +17,14 @@ import java.util.Date;
 public class IndexController {
 
     private final AskQuestionService askQuestionService;
-    private SequenceGeneratorService sequenceGeneratorService;
+    private final SequenceGeneratorService sequenceGeneratorService;
+    private final AnswerService answerService;
 
     @Autowired
-    public IndexController(AskQuestionService askQuestionService, SequenceGeneratorService sequenceGeneratorService) {
+    public IndexController(AskQuestionService askQuestionService, SequenceGeneratorService sequenceGeneratorService, AnswerService answerService) {
         this.askQuestionService = askQuestionService;
         this.sequenceGeneratorService = sequenceGeneratorService;
+        this.answerService = answerService;
     }
 
     @GetMapping("/")
@@ -32,16 +33,14 @@ public class IndexController {
     }
 
     @PostMapping("/ask")
-    public String askQuestion(Model model, @RequestBody Question question) {
-        question.setId(sequenceGeneratorService.generateQuestionSequence(Question.SEQUENCE_NAME));
-        question.setQuestionTimestamp(new Timestamp(new Date().getTime()));
-        askQuestionService.saveQuestionToDatabase(question);
-        model.addAttribute("savedAnswer");
-        return "added " + question.getId();
+    public String askQuestion(Model model, @RequestBody Question question, HttpServletRequest request) {
+        askQuestionService.saveQuestionToDatabase(question, sequenceGeneratorService, request);
+        Answer randomAnswer = answerService.getRandomAnswer();
+        model.addAttribute("answer", randomAnswer);
+        return "answer: " + randomAnswer.toString();
     }
 
 
-    /*Login GET*/
     @GetMapping("/login")
     public String login() {
         return "admin/login-form";

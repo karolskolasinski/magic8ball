@@ -35,7 +35,7 @@ public class AnswerController {
         return "panel";
     }
 
-    //>read
+    //>read [all]
     @GetMapping("/getAllAnswers")
     public String getAllAnswers(Model model) {
         List<Answer> allAnswers = answerService.findAllAnswers();
@@ -43,6 +43,7 @@ public class AnswerController {
         return allAnswers.toString();
     }
 
+    //read [one] //todo ▼ countAnswers -> random getOne
     @GetMapping("/countAnswers")
     public String coutntAnswers(Model model) {
         int howMany = answerService.countAnswers();

@@ -8,6 +8,7 @@ import pl.karolskolasinski.magic8ball.repository.AnswerRepository;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
+import java.util.Random;
 
 @Service
 public class AnswerService {
@@ -34,7 +35,7 @@ public class AnswerService {
 
     public void update(Answer answer, HttpServletRequest request) {
         Optional<Answer> answerOptional = answerRepository.findById(answer.getId());
-        answerOptional.ifPresent(a -> a.setAnswerContent("POPR"));
+        answerOptional.ifPresent(a -> a.setAnswerContent("POPR"));  //todo from request
         answerOptional.ifPresent(answerRepository::save);
     }
 
@@ -42,4 +43,19 @@ public class AnswerService {
         Optional<Answer> answerOptional = answerRepository.findById(Math.toIntExact(answerId));//todo long -> integer
         answerOptional.ifPresent(answerRepository::delete);
     }
+
+    public Answer getRandomAnswer() {
+        Random random = new Random();
+        int i = random.nextInt(countAnswers()) + 1;
+
+        Optional<Answer> answerOptional = answerRepository.findById(i);
+        return answerOptional.orElseGet(this::noAnswer);
+    }
+
+    private Answer noAnswer() {
+        Answer answer = new Answer();
+        answer.setAnswerContent("I have no answer for that");
+        return answer;
+    }
+
 }
