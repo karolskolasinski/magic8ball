@@ -1,6 +1,7 @@
 package pl.karolskolasinski.magic8ball.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.karolskolasinski.magic8ball.model.Answer;
@@ -11,8 +12,8 @@ import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
 import javax.servlet.http.HttpServletRequest;
 
-@RestController
-//@Controller
+//@RestController
+@Controller
 @RequestMapping(path = "/")
 public class IndexController {
 
