@@ -13,89 +13,33 @@
         <link rel="stylesheet" th:href="@{/css/style.css}"/>
     </th:block>
 </head>
+
 <body>
-
 <th:block th:fragment="header">
-    <!--<div class="d-flex flex-column flex-md-row align-items-center p-3 px-md-4 mb-3 bg-white border-bottom shadow-sm sticky-top">-->
-    <!--<h5 class="my-0 mr-md-auto font-weight-normal"><a class="p-2 text-dark" th:href="@{/}">-->
-    <!--<img class="nav-logo" src="/img/quiz-logo.png" alt="bquizlogo"></a>-->
-    <!--</h5>-->
-
-    <!--<nav class="my-2 my-md-0 mr-md-3">-->
-    <!--<div class="btn-group">-->
-    <!--<button type="button" class="btn btn-outline-dark dropdown-toggle" sec:authorize="isAuthenticated()"-->
-    <!--data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">-->
-    <!--<i class="fas fa-bars"></i> Menu-->
-    <!--</button>-->
-
-    <!--<div class="dropdown-menu">-->
-    <!--<a class="dropdown-item" sec:authorize="hasRole('USER') && isAuthenticated()"-->
-    <!--th:href="@{/account/myProfile}"><i class="fas fa-user-cog"></i> Mój profil</a>-->
-    <!--<div class="dropdown-divider"></div>-->
-    <!--<a class="dropdown-item" sec:authorize="hasRole('USER') && isAuthenticated()"-->
-    <!--th:href="@{/account/myStats}"><i class="fas fa-chart-bar"></i> Moje Statystyki</a>-->
-
-
-    <!--<div sec:authorize="hasAnyRole('MODERATOR', 'ADMIN') && isAuthenticated()">-->
-    <!--<div class="dropdown-divider"></div>-->
-    <!--<a class="dropdown-item" th:href="@{/editor/categoryStats}">-->
-    <!--<i class="fas fa-chart-area"></i> Statystyki kategorii-->
-    <!--</a>-->
-
-    <!--<div class="dropdown-divider"></div>-->
-    <!--<a class="dropdown-item" th:href="@{/editor/choose}">-->
-    <!--<i class="fas fa-edit"></i> Edytor pytań-->
-    <!--</a>-->
-
-    <!--<div class="dropdown-divider"></div>-->
-    <!--<a class="dropdown-item" th:href="@{/editor/add}">-->
-    <!--<i class="far fa-plus-square"></i> Dodawacz pytań-->
-    <!--</a>-->
-
-    <!--<div class="dropdown-divider"></div>-->
-    <!--<a class="dropdown-item" th:href="@{/admin/listUsers}">-->
-    <!--<i class="fas fa-list"></i> Lista użytkowników-->
-    <!--</a>-->
-    <!--</div>-->
-
-    <!--</div>-->
-    <!--</div>-->
-    <!--</nav>-->
-    <!--<nav class="my-2 my-md-0 mr-md-3">-->
-    <!--<a class="btn btn-outline-warning" sec:authorize="!isAuthenticated()" th:href="@{/login}"><i-->
-    <!--class="fas fa-sign-in-alt"></i> Login</a>-->
-    <!--<a class="btn btn-outline-warning" sec:authorize="!isAuthenticated()" th:href="@{/account/register}"><i-->
-    <!--class="fas fa-user-plus"></i> Załóż konto</a>-->
-    <!--<a class="btn btn-outline-warning" sec:authorize="isAuthenticated()" th:href="@{/logout}"><i-->
-    <!--class="fas fa-sign-out-alt"></i> Logout</a>-->
-    <!--</nav>-->
-    <!--</div>-->
-
 </th:block>
 
 <th:block th:fragment="footer">
     <footer class="page-footer transparent">
         <div class="footer-copyright grey-text">
             <div class="container">
-
-                <span>© <script>document.write(new Date().getFullYear())</script> karolskolasinski.pl </span>
-
+                <span>© <script type="text/javascript" th:src="@{js/year.js}"></script>
+                    designed by Karol Skolasiński</span>
                 <span class="right">
-                    <span><a class="black-text text-lighten-1" href="#!">About</a></span>
+                    <span><a class="black-text text-lighten-1" href="https://www.linkedin.com/in/karolskolasinski/"
+                             target="_blank">About Me</a>
+                    </span>
                     <span> | </span>
-                    <a class="black-text text-lighten-1" href="#!">Login</a>
+                    <a class="black-text text-lighten-1" th:href="@{/login}">Login</a>
                     <span> | </span>
-                    <a class="black-text text-lighten-1" href="#!">Github </a>
+                    <a class="black-text text-lighten-1"
+                       href="https://github.com/karolskolasinski/magic8ball">Github</a>
                 </span>
-
             </div>
         </div>
     </footer>
 </th:block>
 
 <th:block th:fragment="scripts">
-    <!--<script type="text/javascript" th:src="@{/webjars/popper.js/1.14.3/umd/popper.min.js}"></script>-->
-    <!--<script type="text/javascript" th:src="@{/webjars/jquery/3.3.1/jquery.min.js}"></script>-->
     <script type="text/javascript" th:src="@{/webjars/materialize-css/1.0.0/dist/js/materialize.js}"></script>
 </th:block>
 
