@@ -2,7 +2,7 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <th:block th:replace="/fragments :: meta" th:remove="tag"/>
-    <title>Magic 8 Ball</title>
+    <title>Magic 8-ball</title>
     <th:block th:replace="/fragments :: link-styles" th:remove="tag"/>
 </head>
 <body>
@@ -10,7 +10,7 @@
 
 <main>
     <div class="container">
-        <h3 class="center">Magic 8 Ball</h3>
+        <h3 class="center">Magic 8-ball</h3>
 
         <div class="row center-align">
             <div class="col s6 m6 offset-s3 offset-m3 white-text">
@@ -25,6 +25,11 @@
             <a href="http://materializecss.com/getting-started.html" id="download-button"
                class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
         </div>
+
+        <div class="row center">
+            <img src="img/m8b_front.png" alt="image loading failed."/>
+        </div>
+
     </div>
 </main>
 
