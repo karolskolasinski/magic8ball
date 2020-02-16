@@ -11,3 +11,8 @@
     width: 80px;
     transform: translate(-50%, -50%);
 }
+
+::selection {
+    background: transparent;
+    text-shadow: #000 0 0 2px;
+}

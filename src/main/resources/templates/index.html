@@ -11,7 +11,7 @@
 
 <main>
     <div class="container">
-        <h3 class="center">Magic 8-ball</h3>
+        <h3 class="center"><a href="/" class="black-text">Magic 8-ball</a></h3>
 
         <div class="row center-align">
             <div class="col s6 m6 offset-s3 offset-m3 white-text">
@@ -29,7 +29,14 @@
         </div>
 
         <div class="row center">
-            <div class="image_with_txt">
+            <div class="image_with_txt"
+                 th:if="${picture_side == T(pl.karolskolasinski.magic8ball.model.PictureSide).FRONT}">
+                <img src="img/m8b_front_fixed.png" alt="Magic 8-ball" height="400">
+                <div class="centered_text_over_image white-text"><span th:text="*{answer}"></span></div>
+            </div>
+
+            <div class="image_with_txt"
+                 th:if="${picture_side == T(pl.karolskolasinski.magic8ball.model.PictureSide).BACK}">
                 <img src="img/m8b_back_fixed.png" alt="Magic 8-ball" height="400">
                 <div class="centered_text_over_image white-text"><span th:text="*{answer}"></span></div>
             </div>
