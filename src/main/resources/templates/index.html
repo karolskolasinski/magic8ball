@@ -6,60 +6,28 @@
     <th:block th:replace="/fragments :: link-styles" th:remove="tag"/>
 </head>
 <body>
-<th:block th:replace="/fragments :: navigator" th:remove="tag"/>
+<th:block th:replace="/fragments :: header" th:remove="tag"/>
 
-<div id="layout" class="pure-g">
-    <div class="content pure-u-1 pure-u-md-3-4">
-        <div>
-            <!-- A wrapper for all the blog posts -->
-            <div class="posts">
-                <h1 class="content-subhead">Magic 8 ball</h1>
+<main>
+    <div class="container">
+        <h3 class="center">Magic 8 Ball</h3>
 
-                <!-- A single blog post -->
-                <section class="post">
-                    <header class="post-header">
-                        <h2 class="post-title">Introducing Pure</h2>
-
-                        <p class="post-meta">
-                            By <a href="#" class="post-author">Tilo Mitra</a> under <a
-                                class="post-category post-category-design" href="#">CSS</a> <a
-                                class="post-category post-category-pure" href="#">Pure</a>
-                        </p>
-                    </header>
-
-                    <div class="post-description">
-                        <p>
-                            Yesterday at CSSConf, we launched Pure – a new CSS library. Phew! Here are the <a
-                                href="https://speakerdeck.com/tilomitra/pure-bliss">slides from the presentation</a>.
-                            Although it looks pretty minimalist, we’ve been working on Pure for several months. After
-                            many iterations, we have released Pure as a set of small, responsive, CSS modules that you
-                            can use in every web project.
-                        </p>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="text" required>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>Username</label>
-                    </div>
-
-                    <div class="input-group">
-                        <input type="password" required>
-                        <span class="highlight"></span>
-                        <span class="bar"></span>
-                        <label>Password</label>
-                    </div>
-
-                </section>
-            </div>
-
-            <div class="footer">
-
+        <div class="row center-align">
+            <div class="col s6 m6 offset-s3 offset-m3 white-text">
+                <div class="input-field">
+                    <input id="question_input" type="text" class="validate">
+                    <label for="question_input">Ask me a question</label>
+                </div>
             </div>
         </div>
+
+        <div class="row center">
+            <a href="http://materializecss.com/getting-started.html" id="download-button"
+               class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+        </div>
     </div>
-</div>
+
+</main>
 
 <div class="container">
     <th:block th:replace="/fragments :: footer" th:remove="tag"/>
