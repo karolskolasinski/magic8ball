@@ -1,1 +1,13 @@
+.image_with_txt {
+    position: relative;
+    text-align: center;
+    /*color: white;*/
+}
 
+.centered_text_over_image {
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    width: 80px;
+    transform: translate(-50%, -50%);
+}

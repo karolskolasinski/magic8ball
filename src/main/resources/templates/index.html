@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
+    <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
     <th:block th:replace="/fragments :: meta" th:remove="tag"/>
     <title>Magic 8-ball</title>
     <th:block th:replace="/fragments :: link-styles" th:remove="tag"/>
@@ -27,7 +28,10 @@
         </div>
 
         <div class="row center">
-            <img src="img/m8b_front.png" alt="image loading failed."/>
+            <div class="image_with_txt">
+                <img src="img/m8b_back_fixed.png" alt="Magic 8-ball" height="400">
+                <div class="centered_text_over_image white-text">Of course.</div>
+            </div>
         </div>
 
     </div>
