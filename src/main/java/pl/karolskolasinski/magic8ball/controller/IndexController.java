@@ -4,15 +4,10 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import pl.karolskolasinski.magic8ball.model.Answer;
-import pl.karolskolasinski.magic8ball.model.Question;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.AskQuestionService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-import javax.servlet.http.HttpServletRequest;
-
-//@RestController
 @Controller
 @RequestMapping(path = "/")
 public class IndexController {
@@ -34,13 +29,11 @@ public class IndexController {
     }
 
     @PostMapping("/ask")
-    public String askQuestion(Model model, @RequestBody Question question, HttpServletRequest request) {
-        askQuestionService.saveQuestionToDatabase(question, sequenceGeneratorService, request);
-        Answer randomAnswer = answerService.getRandomAnswer();
-        model.addAttribute("answer", randomAnswer);
-        return "answer: " + randomAnswer.toString();
+    public String askQuestion(Model model, @ModelAttribute("question_input") String question_input) {
+        askQuestionService.saveQuestionToDatabase(sequenceGeneratorService, question_input);
+        model.addAttribute("answer", answerService.getRandomAnswer());
+        return "index";
     }
-
 
     @GetMapping("/login")
     public String login() {

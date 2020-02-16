@@ -15,22 +15,23 @@
 
         <div class="row center-align">
             <div class="col s6 m6 offset-s3 offset-m3 white-text">
-                <div class="input-field">
-                    <input id="question_input" type="text" class="validate">
-                    <label for="question_input">Ask me a question</label>
-                </div>
-            </div>
-        </div>
+                <form th:action="@{/ask}" th:method="post" th:object="${question_input}">
+                    <div class="input-field">
+                        <input th:name="question_input" id="question_input" type="text">
+                        <label for="question_input">Write some question</label>
+                    </div>
 
-        <div class="row center">
-            <a href="http://materializecss.com/getting-started.html" id="download-button"
-               class="btn-large waves-effect waves-light teal lighten-1">Get Started</a>
+                    <div class="row center">
+                        <button class="btn waves-effect waves-light" type="submit" name="question_input">Ask me</button>
+                    </div>
+                </form>
+            </div>
         </div>
 
         <div class="row center">
             <div class="image_with_txt">
                 <img src="img/m8b_back_fixed.png" alt="Magic 8-ball" height="400">
-                <div class="centered_text_over_image white-text">Of course.</div>
+                <div class="centered_text_over_image white-text"><span th:text="*{answer}"></span></div>
             </div>
         </div>
 

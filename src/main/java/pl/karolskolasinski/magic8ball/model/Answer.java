@@ -23,9 +23,6 @@ public class Answer {
     private int id;
 
     @NotEmpty
-    private Language language;
-
-    @NotEmpty
     @Indexed(unique = true)
     private String answerContent;
 
