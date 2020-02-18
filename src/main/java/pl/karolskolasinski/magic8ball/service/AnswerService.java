@@ -5,7 +5,6 @@ import org.springframework.stereotype.Service;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.repository.AnswerRepository;
 
-import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Optional;
 import java.util.Random;
@@ -20,27 +19,27 @@ public class AnswerService {
         this.answerRepository = answerRepository;
     }
 
-    public Answer saveAnswerToDatabase(Answer answer) {
+    public void saveAnswerToDatabase(Answer answer) {
         answerRepository.save(answer);
-        return answer;
     }
 
     public List<Answer> findAllAnswers() {
         return answerRepository.findAll();
     }
 
-    public int countAnswers() {
+    private int countAnswers() {
         return answerRepository.countAnswersByAnswerContentIsNotNull();
     }
 
-    public void update(Answer answer, HttpServletRequest request) {
-        Optional<Answer> answerOptional = answerRepository.findById(answer.getId());
-        answerOptional.ifPresent(a -> a.setAnswerContent("POPR"));  //todo from request
+    public Answer update(int answerToEditId, Answer answer) {
+        Optional<Answer> answerOptional = answerRepository.findById(answerToEditId);
+        answerOptional.ifPresent(a -> a.setAnswerContent(answer.getAnswerContent()));
         answerOptional.ifPresent(answerRepository::save);
+        return answerOptional.orElseGet(() -> noAnswer("No answer to update"));
     }
 
-    public void deleteAnswer(Long answerId) {
-        Optional<Answer> answerOptional = answerRepository.findById(Math.toIntExact(answerId));//todo long -> integer
+    public void deleteAnswer(int answerId) {
+        Optional<Answer> answerOptional = answerRepository.findById(answerId);
         answerOptional.ifPresent(answerRepository::delete);
     }
 
@@ -49,12 +48,12 @@ public class AnswerService {
         int i = random.nextInt(countAnswers()) + 1;
 
         Optional<Answer> answerOptional = answerRepository.findById(i);
-        return answerOptional.orElseGet(this::noAnswer);
+        return answerOptional.orElseGet(() -> noAnswer("I have no answer for that"));
     }
 
-    private Answer noAnswer() {
+    private Answer noAnswer(String s) {
         Answer answer = new Answer();
-        answer.setAnswerContent("I have no answer for that");
+        answer.setAnswerContent(s);
         return answer;
     }
 

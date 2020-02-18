@@ -23,44 +23,34 @@ public class AnswerController {
         this.sequenceGeneratorService = sequenceGeneratorService;
     }
 
-    /*>>>CRUD<<<*/
+    /*CRUD ▼*/
 
     //>create
     @PostMapping("/addAnswer")
-    public String createAnswer(Model model, @RequestBody Answer answer) {
+    public String createAnswer(@RequestBody Answer answer) {
         answer.setId(sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME));
         answerService.saveAnswerToDatabase(answer);
-        model.addAttribute("savedAnswer", answerService.saveAnswerToDatabase(answer));
-        return "panel";
+        return "success adding: " + answer.toString();
     }
 
     //>read [all]
     @GetMapping("/getAllAnswers")
-    public String getAllAnswers(Model model) {
-        List<Answer> allAnswers = answerService.findAllAnswers();
-        model.addAttribute("allAnswers", allAnswers);
-        return allAnswers.toString();
-    }
-
-    //read [one] //todo ▼ countAnswers -> random getOne
-    @GetMapping("/countAnswers")
-    public String coutntAnswers(Model model) {
-        int howMany = answerService.countAnswers();
-        return "" + howMany;
+    public String getAllAnswers() {
+        return answerService.findAllAnswers().toString();
     }
 
     //>update
-    @PostMapping("/edit")
-    public String updateAnswer(Answer answer, HttpServletRequest request) {
-        answerService.update(answer, request);
-        return "redirect:" + request.getHeader("referer");
+    @PostMapping("/edit/{answerToEditId}")
+    public String updateAnswer(@PathVariable int answerToEditId, @RequestBody Answer answer) {
+        Answer answerAfterEdit = answerService.update(answerToEditId, answer);
+        return "old answer: " + answer.toString() + "\nreplaced by new answer: " + answerAfterEdit.toString();
     }
 
     //>delete
     @GetMapping("/delete/{questionId}")
-    public String deleteAnswer(HttpServletRequest request, @PathVariable(name = "questionId") Long answerId) {
+    public String deleteAnswer(@PathVariable(name = "questionId") int answerId) {
         answerService.deleteAnswer(answerId);
-        return "redirect:" + request.getHeader("referer");
+        return "success deleting answer id: " + answerId;
     }
 
 }
