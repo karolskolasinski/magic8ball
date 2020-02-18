@@ -27,27 +27,35 @@ public class AnswerService {
         return answerRepository.findAll();
     }
 
+    private Optional<Answer> findOne(int id) {
+        return answerRepository.findById(id);
+    }
+
     private int countAnswers() {
         return answerRepository.countAnswersByAnswerContentIsNotNull();
     }
 
+    public Answer getAnswerById(int id) {
+        Optional<Answer> answerOptional = findOne(id);
+        return answerOptional.orElseGet(() -> noAnswer("Answer not found"));
+    }
+
     public Answer update(int answerToEditId, Answer answer) {
-        Optional<Answer> answerOptional = answerRepository.findById(answerToEditId);
+        Optional<Answer> answerOptional = findOne(answerToEditId);
         answerOptional.ifPresent(a -> a.setAnswerContent(answer.getAnswerContent()));
         answerOptional.ifPresent(answerRepository::save);
         return answerOptional.orElseGet(() -> noAnswer("No answer to update"));
     }
 
     public void deleteAnswer(int answerId) {
-        Optional<Answer> answerOptional = answerRepository.findById(answerId);
+        Optional<Answer> answerOptional = findOne(answerId);
         answerOptional.ifPresent(answerRepository::delete);
     }
 
     public Answer getRandomAnswer() {
         Random random = new Random();
         int i = random.nextInt(countAnswers()) + 1;
-
-        Optional<Answer> answerOptional = answerRepository.findById(i);
+        Optional<Answer> answerOptional = findOne(i);
         return answerOptional.orElseGet(() -> noAnswer("I have no answer for that"));
     }
 

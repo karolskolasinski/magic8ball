@@ -1,14 +1,11 @@
 package pl.karolskolasinski.magic8ball.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-import javax.servlet.http.HttpServletRequest;
-import java.util.List;
 
 @RestController
 @RequestMapping(path = "/admin/")
@@ -42,12 +39,13 @@ public class AnswerController {
     //>update
     @PostMapping("/edit/{answerToEditId}")
     public String updateAnswer(@PathVariable int answerToEditId, @RequestBody Answer answer) {
-        Answer answerAfterEdit = answerService.update(answerToEditId, answer);
-        return "old answer: " + answer.toString() + "\nreplaced by new answer: " + answerAfterEdit.toString();
+        Answer before = answerService.getAnswerById(answerToEditId);
+        Answer after = answerService.update(answerToEditId, answer);
+        return "old answer: " + before.toString() + "\nreplaced by new answer: " + after.toString();
     }
 
     //>delete
-    @GetMapping("/delete/{questionId}")
+    @PostMapping("/delete/{questionId}")
     public String deleteAnswer(@PathVariable(name = "questionId") int answerId) {
         answerService.deleteAnswer(answerId);
         return "success deleting answer id: " + answerId;
