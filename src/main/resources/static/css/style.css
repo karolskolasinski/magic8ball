@@ -12,6 +12,10 @@
     transform: translate(-50%, -50%);
 }
 
+.error-message {
+    color: #26a69a;
+}
+
 ::selection {
     background: transparent;
     text-shadow: #000 0 0 2px;

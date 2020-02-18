@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="pl" xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <th:block th:fragment="meta">
         <meta charset="UTF-8">
@@ -11,7 +11,6 @@
     <th:block th:fragment="link-styles">
         <link rel="stylesheet" th:href="@{/webjars/materialize-css/1.0.0/dist/css/materialize.css}"/>
         <link rel="stylesheet" th:href="@{/css/style.css}"/>
-        <link rel="stylesheet" th:href="@{/css/baloon.css}"/>
     </th:block>
 </head>
 
@@ -57,6 +56,7 @@
 
 <th:block th:fragment="scripts">
     <script type="text/javascript" th:src="@{/webjars/materialize-css/1.0.0/dist/js/materialize.js}"></script>
+    <script type="text/javascript" th:src="@{/js/replaceValidation.js}"></script>
 </th:block>
 
 </body>
