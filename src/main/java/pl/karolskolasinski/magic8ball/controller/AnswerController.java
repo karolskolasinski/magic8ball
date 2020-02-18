@@ -11,7 +11,6 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 
 @RestController
-//@Controller
 @RequestMapping(path = "/admin/")
 public class AnswerController {
 

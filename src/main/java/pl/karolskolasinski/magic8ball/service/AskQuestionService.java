@@ -20,6 +20,7 @@ public class AskQuestionService {
         this.askQuestionRepository = askQuestionRepository;
     }
 
+    //todo @Size
     public void saveQuestionToDatabase(SequenceGeneratorService sequenceGeneratorService, @NotEmpty @Size(min = 5) String questionContent) {
         Question question = new Question();
         question.setId(sequenceGeneratorService.generateQuestionSequence(Question.SEQUENCE_NAME));

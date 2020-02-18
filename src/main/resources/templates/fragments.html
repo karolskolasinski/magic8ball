@@ -11,6 +11,7 @@
     <th:block th:fragment="link-styles">
         <link rel="stylesheet" th:href="@{/webjars/materialize-css/1.0.0/dist/css/materialize.css}"/>
         <link rel="stylesheet" th:href="@{/css/style.css}"/>
+        <link rel="stylesheet" th:href="@{/css/baloon.css}"/>
     </th:block>
 </head>
 
@@ -26,7 +27,8 @@
             <div class="row">
                 <div class="col">
                     <h5 class="grey-text text-darken-1">Attribution</h5>
-                    <a href="https://www.freepik.com/free-photos-vectors/circle" class="grey-text text-lighten-1" target="_blank">
+                    <a href="https://www.freepik.com/free-photos-vectors/circle" class="grey-text text-lighten-1"
+                       target="_blank">
                         Circle vector created by vectorpocket - www.freepik.com</a>
                 </div>
             </div>
@@ -38,11 +40,11 @@
                     designed by Karol Skolasiński</span>
 
                 <span class="right">
-                    <span><a class="black-text text-lighten-1" href="https://www.linkedin.com/in/karolskolasinski/"
-                             target="_blank">About Me</a>
-                    </span>
+                    <a class="black-text text-lighten-1"
+                       href="mailto:karolskolasinski@gmail.com?subject=Magic 8-ball&body=Awesome app!">Contact</a>
                     <span> | </span>
-                    <a class="black-text text-lighten-1" th:href="@{/login}">Login</a>
+                    <span><a class="black-text text-lighten-1" href="https://www.linkedin.com/in/karolskolasinski/"
+                             target="_blank">About Me</a></span>
                     <span> | </span>
                     <a class="black-text text-lighten-1"
                        href="https://github.com/karolskolasinski/magic8ball">Github</a>

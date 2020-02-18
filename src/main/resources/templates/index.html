@@ -17,7 +17,8 @@
             <div class="col s6 m6 offset-s3 offset-m3 white-text">
                 <form th:action="@{/ask}" th:method="post" th:object="${question_input}">
                     <div class="input-field">
-                        <input th:name="question_input" id="question_input" type="text">
+                        <input th:name="question_input" id="question_input" type="text" minlength="3"
+                               required title="3 characters minimum" data-balloon-pos="up">
                         <label for="question_input">Write some question</label>
                     </div>
 
