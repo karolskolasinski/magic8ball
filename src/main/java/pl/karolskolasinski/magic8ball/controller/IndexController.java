@@ -6,20 +6,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import pl.karolskolasinski.magic8ball.model.PictureSide;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
-import pl.karolskolasinski.magic8ball.service.AskQuestionService;
+import pl.karolskolasinski.magic8ball.service.QuestionService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
 @Controller
 @RequestMapping(path = "/")
 public class IndexController {
 
-    private final AskQuestionService askQuestionService;
+    private final QuestionService questionService;
     private final SequenceGeneratorService sequenceGeneratorService;
     private final AnswerService answerService;
 
     @Autowired
-    public IndexController(AskQuestionService askQuestionService, SequenceGeneratorService sequenceGeneratorService, AnswerService answerService) {
-        this.askQuestionService = askQuestionService;
+    public IndexController(QuestionService questionService, SequenceGeneratorService sequenceGeneratorService, AnswerService answerService) {
+        this.questionService = questionService;
         this.sequenceGeneratorService = sequenceGeneratorService;
         this.answerService = answerService;
     }
@@ -33,7 +33,7 @@ public class IndexController {
 
     @PostMapping("/ask")
     public String askQuestion(Model model, @ModelAttribute("question_input") String question_input) {
-        askQuestionService.saveQuestionToDatabase(sequenceGeneratorService, question_input);
+        questionService.saveQuestionToDatabase(sequenceGeneratorService, question_input);
         model.addAttribute("answer", answerService.getRandomAnswer().getAnswerContent());
         model.addAttribute("picture_side", PictureSide.BACK);
         model.addAttribute("question", question_input);

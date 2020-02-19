@@ -3,7 +3,7 @@ package pl.karolskolasinski.magic8ball.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import pl.karolskolasinski.magic8ball.model.Question;
-import pl.karolskolasinski.magic8ball.repository.AskQuestionRepository;
+import pl.karolskolasinski.magic8ball.repository.QuestionRepository;
 
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
@@ -11,13 +11,13 @@ import java.sql.Timestamp;
 import java.util.Date;
 
 @Service
-public class AskQuestionService {
+public class QuestionService {
 
-    private final AskQuestionRepository askQuestionRepository;
+    private final QuestionRepository questionRepository;
 
     @Autowired
-    public AskQuestionService(AskQuestionRepository askQuestionRepository) {
-        this.askQuestionRepository = askQuestionRepository;
+    public QuestionService(QuestionRepository questionRepository) {
+        this.questionRepository = questionRepository;
     }
 
     //todo @Size
@@ -26,6 +26,6 @@ public class AskQuestionService {
         question.setId(sequenceGeneratorService.generateQuestionSequence(Question.SEQUENCE_NAME));
         question.setQuestionTimestamp(new Timestamp(new Date().getTime()));
         question.setQuestionContent(questionContent);
-        askQuestionRepository.save(question);
+        questionRepository.save(question);
     }
 }
