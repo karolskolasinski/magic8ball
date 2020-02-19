@@ -27,6 +27,7 @@ public class IndexController {
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("picture_side", PictureSide.FRONT);
+        model.addAttribute("question", "");
         return "index";
     }
 
@@ -35,6 +36,7 @@ public class IndexController {
         askQuestionService.saveQuestionToDatabase(sequenceGeneratorService, question_input);
         model.addAttribute("answer", answerService.getRandomAnswer().getAnswerContent());
         model.addAttribute("picture_side", PictureSide.BACK);
+        model.addAttribute("question", question_input);
         return "index";
     }
 

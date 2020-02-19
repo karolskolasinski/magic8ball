@@ -25,6 +25,10 @@
                     <div class="row center">
                         <button class="btn waves-effect waves-light" type="submit" name="question_input">Ask me</button>
                     </div>
+
+                    <div class="grey-text" th:if="${question.length() > 0}">
+                        <span th:text="'Your question: ' + ${question_input}"></span>
+                    </div>
                 </form>
             </div>
         </div>
