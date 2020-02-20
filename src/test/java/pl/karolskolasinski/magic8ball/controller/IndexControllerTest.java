@@ -16,6 +16,8 @@ import java.sql.Timestamp;
 import java.util.Date;
 import java.util.Optional;
 
+import static org.hamcrest.Matchers.hasProperty;
+import static org.hamcrest.Matchers.is;
 import static org.mockito.Mockito.*;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,31 +38,30 @@ class IndexControllerTest {
     private AnswerRepository mockAnswerRepository;
 
     @Test
-    void find_login_ok() throws Exception {
+    void shouldReturnAnswerWhenPostingQuestion() throws Exception {
         //given
         final int ID = 1;
-        final String QUESTION = "My question";
+        final String QUESTION_CONTENT = "My question";
         final Timestamp QUESTION_TIMESTAMP = new Timestamp(new Date().getTime());
-        final Question question = new Question(ID, QUESTION, QUESTION_TIMESTAMP);
-        final Answer answer = new Answer(1, "Answer");
+        final Question QUESTION = new Question(ID, QUESTION_CONTENT, QUESTION_TIMESTAMP);
+        final Answer ANSWER = new Answer(1, "Answer");
         final PictureSide FRONT = PictureSide.FRONT;
         final PictureSide BACK = PictureSide.BACK;
 
         //when
-        when(mockQuestionRepository.findById(1)).thenReturn(Optional.of(question));
+        when(mockQuestionRepository.findById(1)).thenReturn(Optional.of(QUESTION));
         when(mockAnswerRepository.countAnswersByAnswerContentIsNotNull()).thenReturn(1);
-        when(mockAnswerRepository.findById(1)).thenReturn(Optional.of(answer));
+        when(mockAnswerRepository.findById(1)).thenReturn(Optional.of(ANSWER));
+
 
         //then
         mockMvc.perform(post("/ask"))
                 .andDo(print())
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
-//                .andExpect(forwardedUrl("/templates/index.html"))
-                .andExpect(model().attribute("answer", answer.getAnswerContent()))
-                .andExpect(model().attribute("picture_side", BACK));
-//                .andExpect(model().attribute("question", QUESTION));
-
+                .andExpect(model().attribute("answer", ANSWER.getAnswerContent()))
+                .andExpect(model().attribute("picture_side", BACK))
+                .andExpect(model().attribute("question", QUESTION_CONTENT));
     }
 
 }
