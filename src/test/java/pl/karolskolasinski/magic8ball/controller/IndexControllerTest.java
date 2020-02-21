@@ -36,14 +36,14 @@ class IndexControllerTest {
     private MockMvc mockMvc;
 
     @BeforeEach
-    void setUp() {
+    void setup() {
         MockitoAnnotations.initMocks(this);
         IndexController indexController = new IndexController(questionService, sequenceGeneratorService, answerService);
         mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
     }
 
     @Test
-    void shouldReturnIndex() throws Exception {
+    void index_shouldReturnStatusOkAndIndexAsViewName() throws Exception {
         PictureSide FRONT = PictureSide.FRONT;
 
         mockMvc.perform(get("/"))
@@ -55,7 +55,7 @@ class IndexControllerTest {
     }
 
     @Test
-    void shouldReturnAnswerWhenPostingQuestion() throws Exception {
+    void index_shouldReturnAnswerWhenPostingQuestion() throws Exception {
         //given
         int answer_id = 1;
         String answer_content = "Answer";
