@@ -9,18 +9,16 @@ import org.springframework.test.web.servlet.MockMvc;
 import org.springframework.test.web.servlet.setup.MockMvcBuilders;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.model.PictureSide;
-import pl.karolskolasinski.magic8ball.model.Question;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.QuestionService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-import java.sql.Timestamp;
-import java.util.Date;
 
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
+
 
 class IndexControllerTest {
 
@@ -57,7 +55,7 @@ class IndexControllerTest {
     @Test
     void index_shouldReturnAnswerWhenPostingQuestion() throws Exception {
         //given
-        int answer_id = 1;
+        int answer_id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         String answer_content = "Answer";
         String question_content = "My question";
         Answer answer = new Answer(answer_id, answer_content);
