@@ -1,6 +1,7 @@
 package pl.karolskolasinski.magic8ball.controller;
 
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
@@ -13,13 +14,12 @@ import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.QuestionService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-
+@DisplayName("Index Controller Test")
 class IndexControllerTest {
 
     @Mock
@@ -41,9 +41,12 @@ class IndexControllerTest {
     }
 
     @Test
+    @DisplayName("/")
     void index_shouldReturnStatusOkAndIndexAsViewName() throws Exception {
+        //given
         PictureSide FRONT = PictureSide.FRONT;
 
+        //then
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
@@ -53,6 +56,7 @@ class IndexControllerTest {
     }
 
     @Test
+    @DisplayName("/ask")
     void index_shouldReturnAnswerWhenPostingQuestion() throws Exception {
         //given
         int answer_id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
