@@ -1,6 +1,6 @@
 **Magic 8-Ball**
 
-#### The web app
+#### Description
 
 a simple web service created using Java Spring Boot, Security, Thymeleaf, MongoDB, Materialize
 
@@ -8,8 +8,6 @@ a simple web service created using Java Spring Boot, Security, Thymeleaf, MongoD
 - receive the answer
 
 Have fun :)
-
-
 
 ###### Description
 

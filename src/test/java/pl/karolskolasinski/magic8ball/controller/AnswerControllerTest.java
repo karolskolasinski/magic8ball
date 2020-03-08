@@ -112,7 +112,7 @@ class AnswerControllerTest {
     @DisplayName(">update")
     void answer_shouldUpdateAnswer() throws Exception {
         //given
-        String uri = "/edit/1";
+        String uri = "/edit/{answerToEditId}";
         int id = 1;
         String answerContentBefore = "Answer before";
         String answerContentAfter = "Answer after";
@@ -126,7 +126,10 @@ class AnswerControllerTest {
 //        when(answerService.update(id, answerBefore)).thenReturn(answerAfter);
 
         //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri)
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri, 1)
+//                .param("answerToEditId", "1")
+//                .param("answer", inputJson)
+
                 .content(inputJson)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
