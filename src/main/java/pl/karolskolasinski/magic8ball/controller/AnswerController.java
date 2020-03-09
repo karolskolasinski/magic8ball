@@ -37,7 +37,7 @@ public class AnswerController {
     }
 
     //>update
-    @PostMapping("/edit/{answerToEditId}")
+    @PutMapping("/edit/{answerToEditId}")
     public String updateAnswer(@PathVariable int answerToEditId, @RequestBody Answer answer) {
         Answer before = answerService.getAnswerById(answerToEditId);
         Answer after = answerService.update(answerToEditId, answer);
@@ -45,7 +45,7 @@ public class AnswerController {
     }
 
     //>delete
-    @PostMapping("/delete/{questionId}")
+    @DeleteMapping("/delete/{questionId}")
     public String deleteAnswer(@PathVariable(name = "questionId") int answerId) {
         answerService.deleteAnswer(answerId);
         return "success deleting answer id: " + answerId;
