@@ -2,12 +2,12 @@
 <html lang="pl" xmlns:th="http://www.thymeleaf.org">
 <head>
     <link rel="stylesheet" type="text/css" href="../static/css/style.css"/>
-    <th:block th:replace="/fragments :: meta" th:remove="tag"/>
+    <th:block th:replace="fragments :: meta" th:remove="tag"/>
     <title>Magic 8-ball</title>
-    <th:block th:replace="/fragments :: link-styles" th:remove="tag"/>
+    <th:block th:replace="fragments :: link-styles" th:remove="tag"/>
 </head>
 <body>
-<th:block th:replace="/fragments :: header" th:remove="tag"/>
+<th:block th:replace="fragments :: header" th:remove="tag"/>
 
 <main>
     <div class="container">
@@ -51,8 +51,8 @@
 </main>
 
 <div class="container">
-    <th:block th:replace="/fragments :: footer" th:remove="tag"/>
-    <th:block th:replace="/fragments :: scripts" th:remove="tag"/>
+    <th:block th:replace="fragments :: footer" th:remove="tag"/>
+    <th:block th:replace="fragments :: scripts" th:remove="tag"/>
 </div>
 
 </body>
