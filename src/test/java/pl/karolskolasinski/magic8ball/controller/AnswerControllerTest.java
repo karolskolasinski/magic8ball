@@ -28,6 +28,7 @@ import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @DisplayName("Answer Controller CRUD ▼ Test")
@@ -94,7 +95,7 @@ class AnswerControllerTest {
         int answer1Id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         int answer2Id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         String answer1Content = "Answer1";
-        String answer2Content = "Answer1";
+        String answer2Content = "Answer2";
 
         Answer answer1 = new Answer(answer1Id, answer1Content);
         Answer answer2 = new Answer(answer2Id, answer2Content);
@@ -120,7 +121,7 @@ class AnswerControllerTest {
     @DisplayName(">update")
     void answer_shouldUpdateAnswerWithStatusOk() throws Exception {
         //given
-        String uri = "/edit/{answerToEditId}";
+        String uri = "/admin/edit/{answerToEditId}";
 
         int answerId = 1;
         String answerContentBefore = "Answer before";
@@ -132,19 +133,16 @@ class AnswerControllerTest {
         String successUpdating = "old answer: " + answerBefore.toString() + "\nreplaced by new answer: " + answerAfter.toString();
         String inputJson = mapToJson(answerAfter);
 
-        //when
-//        when(answerService.getAnswerById(answerId)).thenReturn(answerBefore);
-//        when(answerService.update(answerId, answerBefore)).thenReturn(answerAfter);
+        given(answerService.getAnswerByIdBeforeUpdating(answerId)).willReturn(answerBefore);
+        given(answerService.update(answerId, answerAfter)).willReturn(answerAfter);
 
         //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri, 1)
-//                .param("answerToEditId", "1")
-//                .param("answer", inputJson)
-
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri, answerId)
                 .content(inputJson)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(content().string(successUpdating))
                 .andReturn();
 
         String result = mvcResult.getResponse().getContentAsString();

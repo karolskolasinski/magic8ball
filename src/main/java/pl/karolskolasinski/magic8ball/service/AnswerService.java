@@ -45,8 +45,8 @@ public class AnswerService {
         return new Answer(answerById.getId(), answerById.getAnswerContent());
     }
 
-    public Answer update(int answerToOverride, Answer answerForUpdate) {
-        Answer answerById = getAnswerById(answerToOverride);
+    public Answer update(int answerToEditId, Answer answerForUpdate) {
+        Answer answerById = getAnswerById(answerToEditId);
         answerById.setAnswerContent(answerForUpdate.getAnswerContent());
         answerRepository.save(answerById);
         return answerById;
