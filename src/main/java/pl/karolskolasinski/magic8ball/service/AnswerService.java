@@ -37,14 +37,19 @@ public class AnswerService {
 
     public Answer getAnswerById(int id) {
         Optional<Answer> answerOptional = findOneById(id);
-        return answerOptional.orElseGet(() -> noAnswer("Answer not found"));
+        return answerOptional.orElseGet(() -> noAnswer("Answer not found."));
     }
 
-    public Answer update(int answerToEditId, Answer answer) {
-        Optional<Answer> answerOptional = findOneById(answerToEditId);
-        answerOptional.ifPresent(a -> a.setAnswerContent(answer.getAnswerContent()));
-        answerOptional.ifPresent(answerRepository::save);
-        return answerOptional.orElseGet(() -> noAnswer("No answer to update"));
+    public Answer getAnswerByIdBeforeUpdating(int answerToEditId) {
+        Answer answerById = getAnswerById(answerToEditId);
+        return new Answer(answerById.getId(), answerById.getAnswerContent());
+    }
+
+    public Answer update(int answerToOverride, Answer answerForUpdate) {
+        Answer answerById = getAnswerById(answerToOverride);
+        answerById.setAnswerContent(answerForUpdate.getAnswerContent());
+        answerRepository.save(answerById);
+        return answerById;
     }
 
     public void deleteAnswer(int answerId) {
@@ -56,13 +61,12 @@ public class AnswerService {
         Random random = new Random();
         int i = random.nextInt(countAnswers()) + 1;
         Optional<Answer> answerOptional = findOneById(i);
-        return answerOptional.orElseGet(() -> noAnswer("I have no answer for that"));
+        return answerOptional.orElseGet(() -> noAnswer("I have no answer for that."));
     }
 
-    private Answer noAnswer(String s) {
+    private Answer noAnswer(String answerContent) {
         Answer answer = new Answer();
-        answer.setAnswerContent(s);
+        answer.setAnswerContent(answerContent);
         return answer;
     }
-
 }

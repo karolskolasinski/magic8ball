@@ -63,9 +63,11 @@ class AnswerControllerTest {
     void answer_shouldSaveAnswerToDBWithStatusOk() throws Exception {
         //given
         String uri = "/admin/addAnswer";
+
         int id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         String answerContent = "Answer";
         Answer answer = new Answer(id, answerContent);
+
         String successAdding = "success adding: " + answer.toString();
         String inputJson = mapToJson(answer);
 
@@ -78,6 +80,7 @@ class AnswerControllerTest {
                 .andReturn();
 
         String result = mvcResult.getResponse().getContentAsString();
+
         assertNotNull(result);
         assertEquals(successAdding, result);
     }
@@ -87,15 +90,19 @@ class AnswerControllerTest {
     void answer_shouldGetAllAnswersInToStringFormat() throws Exception {
         //given
         String uri = "/admin//getAllAnswers";
+
         int answer1Id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         int answer2Id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         String answer1Content = "Answer1";
         String answer2Content = "Answer1";
+
         Answer answer1 = new Answer(answer1Id, answer1Content);
         Answer answer2 = new Answer(answer2Id, answer2Content);
+
         List<Answer> answerList = new ArrayList<>();
         answerList.add(answer1);
         answerList.add(answer2);
+
         given(answerService.findAllAnswers()).willReturn(answerList);
 
         //then
@@ -104,29 +111,33 @@ class AnswerControllerTest {
                 .andReturn().getResponse();
 
         String result = response.getContentAsString();
+
         assertNotNull(result);
         assertEquals(answerList.toString(), result);
     }
 
     @Test
     @DisplayName(">update")
-    void answer_shouldUpdateAnswer() throws Exception {
+    void answer_shouldUpdateAnswerWithStatusOk() throws Exception {
         //given
         String uri = "/edit/{answerToEditId}";
-        int id = 1;
+
+        int answerId = 1;
         String answerContentBefore = "Answer before";
         String answerContentAfter = "Answer after";
-        Answer answerBefore = new Answer(id, answerContentBefore);
-        Answer answerAfter = new Answer(id, answerContentAfter);
+
+        Answer answerBefore = new Answer(answerId, answerContentBefore);
+        Answer answerAfter = new Answer(answerId, answerContentAfter);
+
         String successUpdating = "old answer: " + answerBefore.toString() + "\nreplaced by new answer: " + answerAfter.toString();
         String inputJson = mapToJson(answerAfter);
 
         //when
-//        when(answerService.getAnswerById(id)).thenReturn(answerBefore);
-//        when(answerService.update(id, answerBefore)).thenReturn(answerAfter);
+//        when(answerService.getAnswerById(answerId)).thenReturn(answerBefore);
+//        when(answerService.update(answerId, answerBefore)).thenReturn(answerAfter);
 
         //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.post(uri, 1)
+        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri, 1)
 //                .param("answerToEditId", "1")
 //                .param("answer", inputJson)
 
@@ -137,6 +148,7 @@ class AnswerControllerTest {
                 .andReturn();
 
         String result = mvcResult.getResponse().getContentAsString();
+
         assertNotNull(result);
         assertEquals(successUpdating, result);
     }

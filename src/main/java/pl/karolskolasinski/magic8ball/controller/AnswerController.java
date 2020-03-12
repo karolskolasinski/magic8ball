@@ -36,12 +36,18 @@ public class AnswerController {
         return answerService.findAllAnswers().toString();
     }
 
+    //>read [one]
+    @GetMapping("/getAnswer/{answerId}")
+    public String getAnswerById(@PathVariable int answerId) {
+        return answerService.getAnswerById(answerId).toString();
+    }
+
     //>update
     @PutMapping("/edit/{answerToEditId}")
-    public String updateAnswer(@PathVariable int answerToEditId, @RequestBody Answer answer) {
-        Answer before = answerService.getAnswerById(answerToEditId);
-        Answer after = answerService.update(answerToEditId, answer);
-        return "old answer: " + before.toString() + "\nreplaced by new answer: " + after.toString();
+    public String updateAnswer(@PathVariable int answerToEditId, @RequestBody Answer answerForUpdate) {
+        Answer answerBefore = answerService.getAnswerByIdBeforeUpdating(answerToEditId);
+        Answer answerAfter = answerService.update(answerToEditId, answerForUpdate);
+        return "old answer: " + answerBefore.toString() + "\nreplaced by new answer: " + answerAfter.toString();
     }
 
     //>delete
