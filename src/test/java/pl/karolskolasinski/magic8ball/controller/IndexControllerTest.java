@@ -44,14 +44,14 @@ class IndexControllerTest {
     @DisplayName("/")
     void index_shouldReturnStatusOkAndIndexAsViewName() throws Exception {
         //given
-        PictureSide FRONT = PictureSide.FRONT;
+        PictureSide pictureSideFront = PictureSide.FRONT;
 
         //then
         mockMvc.perform(get("/"))
                 .andExpect(status().isOk())
                 .andExpect(view().name("index"))
                 .andExpect(model().attributeExists("question"))
-                .andExpect(model().attribute("picture_side", FRONT))
+                .andExpect(model().attribute("picture_side", pictureSideFront))
                 .andExpect(model().attribute("question", ""));
     }
 
@@ -59,11 +59,11 @@ class IndexControllerTest {
     @DisplayName("/ask")
     void index_shouldReturnAnswerWhenPostingQuestion() throws Exception {
         //given
-        int answer_id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
-        String answer_content = "Answer";
-        String question_content = "My question";
-        Answer answer = new Answer(answer_id, answer_content);
-        PictureSide back = PictureSide.BACK;
+        int answerId = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
+        String answerContent = "Answer";
+        String questionContent = "My question";
+        Answer answer = new Answer(answerId, answerContent);
+        PictureSide bacpictureSideBack = PictureSide.BACK;
 
         //when
         when(answerService.getRandomAnswer()).thenReturn(answer);
@@ -71,8 +71,8 @@ class IndexControllerTest {
         //then
         mockMvc.perform(post("/ask")
                 .contentType(MediaType.APPLICATION_FORM_URLENCODED)
-                .flashAttr("question", question_content))
-                .andExpect(model().attribute("picture_side", back))
+                .flashAttr("question", questionContent))
+                .andExpect(model().attribute("picture_side", bacpictureSideBack))
                 .andExpect(view().name("index"))
                 .andExpect(model().attribute("answer", answer.getAnswerContent()));
     }

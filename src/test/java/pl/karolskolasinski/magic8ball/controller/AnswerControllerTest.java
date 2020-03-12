@@ -60,7 +60,7 @@ class AnswerControllerTest {
 
     @Test
     @DisplayName(">create")
-    void answer_shouldSaveAnswerToDBAndReturnStatusOk() throws Exception {
+    void answer_shouldSaveAnswerToDBWithStatusOk() throws Exception {
         //given
         String uri = "/admin/addAnswer";
         int id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
