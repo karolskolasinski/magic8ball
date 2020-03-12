@@ -19,7 +19,7 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
-@DisplayName("Index Controller Test")
+@DisplayName("IndexController Test")
 class IndexControllerTest {
 
     @Mock
@@ -41,8 +41,8 @@ class IndexControllerTest {
     }
 
     @Test
-    @DisplayName("/")
-    void index_shouldReturnStatusOkAndIndexAsViewName() throws Exception {
+    @DisplayName("should return index page with status OK")
+    void index_shouldReturnIndexPageWithStatusOk() throws Exception {
         //given
         PictureSide pictureSideFront = PictureSide.FRONT;
 
@@ -56,8 +56,8 @@ class IndexControllerTest {
     }
 
     @Test
-    @DisplayName("/ask")
-    void index_shouldReturnAnswerWhenPostingQuestion() throws Exception {
+    @DisplayName("should return Answer when posting a question")
+    void index_shouldReturnAnswerWhenPostingAQuestion() throws Exception {
         //given
         int answerId = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
         String answerContent = "Answer";

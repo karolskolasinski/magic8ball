@@ -9,6 +9,7 @@ import org.junit.jupiter.api.DisplayName;
 import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.mock.web.MockHttpServletResponse;
 import org.springframework.test.web.servlet.MockMvc;
@@ -26,13 +27,16 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.BDDMockito.given;
-import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
+import static org.mockito.Mockito.*;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
-@DisplayName("Answer Controller CRUD ▼ Test")
+@DisplayName("AnswerController CRUD ▼ Test")
 class AnswerControllerTest {
+
+    private static final int UNKNOWN_ID = Integer.MAX_VALUE;
 
     @Mock
     AnswerService answerService;
@@ -60,12 +64,13 @@ class AnswerControllerTest {
     }
 
     @Test
-    @DisplayName(">create")
+    @DisplayName("should createAnswer with status OK")
     void answer_shouldSaveAnswerToDBWithStatusOk() throws Exception {
         //given
         String uri = "/admin/addAnswer";
+        String sequenceName = Answer.SEQUENCE_NAME;
 
-        int id = sequenceGeneratorService.generateAnswerSequence(Answer.SEQUENCE_NAME);
+        int id = sequenceGeneratorService.generateAnswerSequence(sequenceName);
         String answerContent = "Answer";
         Answer answer = new Answer(id, answerContent);
 
@@ -78,7 +83,13 @@ class AnswerControllerTest {
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
+                .andExpect(content().string(successAdding))
+                .andDo(print())
                 .andReturn();
+
+        verify(sequenceGeneratorService, times(2)).generateAnswerSequence(sequenceName);
+        verify(answerService, times(1)).saveAnswerToDatabase(answer);
+        verifyNoMoreInteractions(answerService);
 
         String result = mvcResult.getResponse().getContentAsString();
 
@@ -87,7 +98,7 @@ class AnswerControllerTest {
     }
 
     @Test
-    @DisplayName(">read [all]")
+    @DisplayName("should getAllAnswers in toString format")
     void answer_shouldGetAllAnswersInToStringFormat() throws Exception {
         //given
         String uri = "/admin//getAllAnswers";
@@ -109,7 +120,11 @@ class AnswerControllerTest {
         //then
         MockHttpServletResponse response = mockMvc.perform(get(uri))
                 .andExpect(status().isOk())
+                .andDo(print())
                 .andReturn().getResponse();
+
+        verify(answerService, times(1)).findAllAnswers();
+        verifyNoMoreInteractions(answerService);
 
         String result = response.getContentAsString();
 
@@ -118,7 +133,7 @@ class AnswerControllerTest {
     }
 
     @Test
-    @DisplayName(">update")
+    @DisplayName("should UpdateAnswer with status OK")
     void answer_shouldUpdateAnswerWithStatusOk() throws Exception {
         //given
         String uri = "/admin/edit/{answerToEditId}";
@@ -137,18 +152,70 @@ class AnswerControllerTest {
         given(answerService.update(answerId, answerAfter)).willReturn(answerAfter);
 
         //then
-        MvcResult mvcResult = mockMvc.perform(MockMvcRequestBuilders.put(uri, answerId)
+        MvcResult mvcResult = mockMvc.perform(put(uri, answerId)
                 .content(inputJson)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isOk())
                 .andExpect(content().string(successUpdating))
+                .andDo(print())
                 .andReturn();
+
+        verify(answerService, times(1)).getAnswerByIdBeforeUpdating(answerId);
+        verify(answerService, times(1)).update(answerId, answerAfter);
+        verifyNoMoreInteractions(answerService);
 
         String result = mvcResult.getResponse().getContentAsString();
 
         assertNotNull(result);
         assertEquals(successUpdating, result);
     }
+
+    @Test
+    @DisplayName("should deleteAnswer with status OK")
+    void answer_shouldDeleteAnswerWithStatusOk() throws Exception {
+        //given
+        String uri = "/admin/delete/{answerId}";
+
+        int answerId = 1;
+
+        given(answerService.deleteAnswer(answerId)).willReturn(HttpStatus.OK);
+
+        String successDeleting = "success deleting answer id: " + answerId;
+
+        //then
+        MvcResult mvcResult = mockMvc.perform(delete(uri, answerId))
+                .andExpect(status().isOk())
+                .andExpect(content().string(successDeleting))
+                .andDo(print())
+                .andReturn();
+
+        verify(answerService, times(1)).deleteAnswer(answerId);
+        verifyNoMoreInteractions(answerService);
+
+        String result = mvcResult.getResponse().getContentAsString();
+
+        assertNotNull(result);
+        assertEquals(successDeleting, result);
+    }
+
+    @Test
+    @DisplayName("should fail deleteAnswer with status 404 Not Found")
+    void answer_shouldFailDeleteAnswerWithStatus404NotFound() throws Exception {
+        //given
+        String uri = "/admin/delete/{answerId}";
+
+        given(answerService.deleteAnswer(UNKNOWN_ID)).willReturn(HttpStatus.NOT_FOUND);
+
+        //then
+        mockMvc.perform(delete(uri, UNKNOWN_ID))
+                .andExpect(status().isNotFound())
+                .andDo(print())
+                .andReturn();
+
+        verify(answerService, times(1)).deleteAnswer(UNKNOWN_ID);
+        verifyNoMoreInteractions(answerService);
+    }
+
 
 }

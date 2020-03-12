@@ -1,6 +1,8 @@
 package pl.karolskolasinski.magic8ball.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
@@ -51,10 +53,10 @@ public class AnswerController {
     }
 
     //>delete
-    @DeleteMapping("/delete/{questionId}")
-    public String deleteAnswer(@PathVariable(name = "questionId") int answerId) {
-        answerService.deleteAnswer(answerId);
-        return "success deleting answer id: " + answerId;
+    @DeleteMapping("/delete/{answerId}")
+    public ResponseEntity<String> deleteAnswer(@PathVariable(name = "answerId") int answerId) {
+        HttpStatus httpStatus = answerService.deleteAnswer(answerId);
+        return new ResponseEntity<>("success deleting answer id: " + answerId, httpStatus);
     }
 
 }

@@ -1,6 +1,7 @@
 package pl.karolskolasinski.magic8ball.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.repository.AnswerRepository;
@@ -52,9 +53,14 @@ public class AnswerService {
         return answerById;
     }
 
-    public void deleteAnswer(int answerId) {
+    public HttpStatus deleteAnswer(int answerId) {
         Optional<Answer> answerOptional = findOneById(answerId);
-        answerOptional.ifPresent(answerRepository::delete);
+        if (answerOptional.isPresent()) {
+            answerOptional.ifPresent(answerRepository::delete);
+            return HttpStatus.OK;
+        } else {
+            return HttpStatus.NOT_FOUND;
+        }
     }
 
     public Answer getRandomAnswer() {
