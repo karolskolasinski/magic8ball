@@ -6,7 +6,6 @@ import pl.karolskolasinski.magic8ball.model.Answer;
 import pl.karolskolasinski.magic8ball.service.AnswerService;
 import pl.karolskolasinski.magic8ball.service.SequenceGeneratorService;
 
-
 @RestController
 @RequestMapping(path = "/admin/")
 public class AnswerController {
