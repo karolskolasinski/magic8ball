@@ -16,26 +16,31 @@ import static org.springframework.data.mongodb.core.query.Query.query;
 @Service
 public class SequenceGeneratorService {
 
-    private MongoOperations mongoOperations;
+    private final MongoOperations mongoOperations;
+
 
     @Autowired
     public SequenceGeneratorService(MongoOperations mongoOperations) {
         this.mongoOperations = mongoOperations;
     }
 
+
     public int generateAnswerSequence(String seqName) {
         AnswerSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq", 1), options().returnNew(true).upsert(true),
                 AnswerSequence.class);
+
         return !Objects.isNull(counter) ? counter.getSeq() : 1;
 
     }
+
 
     public int generateQuestionSequence(String seqName) {
         QuestionSequence counter = mongoOperations.findAndModify(query(where("_id").is(seqName)),
                 new Update().inc("seq", 1), options().returnNew(true).upsert(true),
                 QuestionSequence.class);
-        return !Objects.isNull(counter) ? counter.getSeq() : 1;
 
+        return !Objects.isNull(counter) ? counter.getSeq() : 1;
     }
+
 }

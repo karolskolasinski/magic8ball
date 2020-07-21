@@ -17,6 +17,7 @@ public class IndexController {
     private final SequenceGeneratorService sequenceGeneratorService;
     private final AnswerService answerService;
 
+
     @Autowired
     public IndexController(QuestionService questionService, SequenceGeneratorService sequenceGeneratorService, AnswerService answerService) {
         this.questionService = questionService;
@@ -24,10 +25,12 @@ public class IndexController {
         this.answerService = answerService;
     }
 
+
     @GetMapping("/")
     public String index(Model model) {
         model.addAttribute("picture_side", PictureSide.FRONT);
         model.addAttribute("question", "");
+
         return "index";
     }
 
@@ -37,6 +40,7 @@ public class IndexController {
         model.addAttribute("answer", answerService.getRandomAnswer().getAnswerContent());
         model.addAttribute("picture_side", PictureSide.BACK);
         model.addAttribute("question", question_input);
+
         return "index";
     }
 

@@ -53,15 +53,18 @@ class AnswerControllerTest {
         mockMvc = MockMvcBuilders.standaloneSetup(answerController).build();
     }
 
+
     String mapToJson(Object obj) throws JsonProcessingException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.writeValueAsString(obj);
     }
 
+
     <T> T mapFromJson(String json, Class<T> clazz) throws JsonParseException, JsonMappingException, IOException {
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(json, clazz);
     }
+
 
     @Test
     @DisplayName("should createAnswer with status OK")
@@ -97,6 +100,7 @@ class AnswerControllerTest {
         assertEquals(successAdding, result);
     }
 
+
     @Test
     @DisplayName("should getAllAnswers in toString format")
     void answer_shouldGetAllAnswersInToStringFormat() throws Exception {
@@ -131,6 +135,7 @@ class AnswerControllerTest {
         assertNotNull(result);
         assertEquals(answerList.toString(), result);
     }
+
 
     @Test
     @DisplayName("should UpdateAnswer with status OK")
@@ -171,6 +176,7 @@ class AnswerControllerTest {
         assertEquals(successUpdating, result);
     }
 
+
     @Test
     @DisplayName("should deleteAnswer with status OK")
     void answer_shouldDeleteAnswerWithStatusOk() throws Exception {
@@ -199,6 +205,7 @@ class AnswerControllerTest {
         assertEquals(successDeleting, result);
     }
 
+
     @Test
     @DisplayName("should fail deleteAnswer with status 404 Not Found")
     void answer_shouldFailDeleteAnswerWithStatus404NotFound() throws Exception {
@@ -216,6 +223,5 @@ class AnswerControllerTest {
         verify(answerService, times(1)).deleteAnswer(UNKNOWN_ID);
         verifyNoMoreInteractions(answerService);
     }
-
 
 }

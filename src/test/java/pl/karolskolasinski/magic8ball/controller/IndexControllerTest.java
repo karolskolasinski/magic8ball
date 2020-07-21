@@ -25,13 +25,17 @@ class IndexControllerTest {
     @Mock
     QuestionService questionService;
 
+
     @Mock
     SequenceGeneratorService sequenceGeneratorService;
+
 
     @Mock
     AnswerService answerService;
 
+
     private MockMvc mockMvc;
+
 
     @BeforeEach
     void setup() {
@@ -39,6 +43,7 @@ class IndexControllerTest {
         IndexController indexController = new IndexController(questionService, sequenceGeneratorService, answerService);
         mockMvc = MockMvcBuilders.standaloneSetup(indexController).build();
     }
+
 
     @Test
     @DisplayName("should return index page with status OK")
@@ -54,6 +59,7 @@ class IndexControllerTest {
                 .andExpect(model().attribute("picture_side", pictureSideFront))
                 .andExpect(model().attribute("question", ""));
     }
+
 
     @Test
     @DisplayName("should return Answer when posting a question")

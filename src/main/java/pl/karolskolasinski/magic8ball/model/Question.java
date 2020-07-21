@@ -21,12 +21,15 @@ public class Question {
     @Transient
     public static final String SEQUENCE_NAME = "sequence";
 
+
     @Id
     private int id;
+
 
     @NotEmpty
     @Size(min = 5)
     private String questionContent;
+
 
     private Timestamp questionTimestamp;
 

@@ -19,8 +19,10 @@ public class Answer {
     @Transient
     public static final String SEQUENCE_NAME = "sequence";
 
+
     @Id
     private int id;
+
 
     @NotEmpty
     @Indexed(unique = true)
